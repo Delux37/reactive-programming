@@ -1,0 +1,36 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer 
+        mode="side"
+        opened
+        >
+        <ul
+            class="category-list"
+        >   
+            <li 
+            class="category-list--item"
+            [ngClass]="{'active': selectedCategory === 'All' }"
+            (click)="categoryChanged('All')"
+            >All</li>
+            <li 
+                class="category-list--item"
+                *ngFor="let category of categories"
+                (click)="categoryChanged(category)"
+                [ngClass]="{'active': selectedCategory == category }"
+            >
+                {{ category }}
+            </li>
+        </ul>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div
+        class="catalog-container"
+        *ngIf="products.length && !loading"
+        >
+            <catalog-items
+                *ngFor="let product of products"
+                [product]="product"
+            ></catalog-items>
+        </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+

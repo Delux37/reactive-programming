@@ -1,0 +1,24 @@
+<mat-card class="product--card">
+    <mat-card-header>
+      <mat-card-title>{{ product.title | cropText:30 }}</mat-card-title>
+      <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
+    </mat-card-header>
+    <div 
+        class="product--card-image"
+        [style]="{ 'background-image': 'url(' + product.image + ')'}"
+    >
+    </div>
+    <mat-card-content>
+      <p>
+        {{ product.description | cropText:100 }}
+      </p>
+      <p>
+          price: {{ product.price }}$
+      </p>
+    </mat-card-content>
+    <mat-card-footer>
+    </mat-card-footer>
+    <mat-card-actions>
+      <button mat-button color="primary" (click)="addToCart(product)" >Add to cart</button>
+    </mat-card-actions>
+  </mat-card>

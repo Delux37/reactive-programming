@@ -1,0 +1,27 @@
+.category-list {
+    list-style: none;
+    padding: 0 !important;
+    &--item {
+        padding: 5px 10px;
+        transition: background-color .3s;
+        &:hover {
+            cursor: pointer;
+            background-color: rgb(224, 224, 224);
+        }
+    }
+}
+
+.active {
+    background-color: #AAA;
+}
+
+.catalog-container {
+    padding: 30px 0;
+    // width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px 20px;
+    overflow: hidden;
+}

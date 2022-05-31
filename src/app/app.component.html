@@ -1,0 +1,12 @@
+<mat-toolbar
+  class="toolbar"
+>
+  <span>Imperative approach</span>
+  <div class="cart-container">
+    <cart
+      (click)="toggleCart()"
+    ></cart>
+    <cart-items *ngIf="showCart"></cart-items>
+  </div>
+</mat-toolbar>
+<router-outlet></router-outlet>

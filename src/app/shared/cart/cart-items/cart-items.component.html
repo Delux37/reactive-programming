@@ -1,0 +1,11 @@
+<div class="container">
+    <ul>
+        <li 
+            *ngFor="let cartItem of cartItems"
+        >
+            <img width="30px" [src]="cartItem.image"/>
+            <p>x{{ cartItem.amount }}</p>
+            <p>total:{{ cartItem.amount * cartItem.price }}</p>
+        </li>
+    </ul>
+</div>
