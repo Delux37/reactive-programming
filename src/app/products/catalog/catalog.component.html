@@ -1,4 +1,6 @@
-<mat-drawer-container class="example-container">
+<mat-drawer-container class="example-container"
+    *ngIf="(vm$ | async) as vm"
+>
     <mat-drawer 
         mode="side"
         opened
@@ -7,15 +9,10 @@
             class="category-list"
         >   
             <li 
-            class="category-list--item"
-            [ngClass]="{'active': selectedCategory === 'All' }"
-            (click)="categoryChanged('All')"
-            >All</li>
-            <li 
                 class="category-list--item"
-                *ngFor="let category of categories"
-                (click)="categoryChanged(category)"
-                [ngClass]="{'active': selectedCategory == category }"
+                *ngFor="let category of vm.categories"
+                (click)="facade.updateCategory(category)"
+                [ngClass]="{'active': vm.selectedCategory == category }"
             >
                 {{ category }}
             </li>
@@ -24,10 +21,9 @@
     <mat-drawer-content>
         <div
         class="catalog-container"
-        *ngIf="products.length && !loading"
         >
             <catalog-items
-                *ngFor="let product of products"
+                *ngFor="let product of vm.products"
                 [product]="product"
             ></catalog-items>
         </div>

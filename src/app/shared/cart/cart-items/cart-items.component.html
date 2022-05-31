@@ -1,7 +1,7 @@
 <div class="container">
     <ul>
         <li 
-            *ngFor="let cartItem of cartItems"
+            *ngFor="let cartItem of cartItems$ | async"
         >
             <img width="30px" [src]="cartItem.image"/>
             <p>x{{ cartItem.amount }}</p>

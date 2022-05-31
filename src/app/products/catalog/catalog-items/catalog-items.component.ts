@@ -1,24 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CartService } from 'src/app/shared/cart/services/cart.service';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ProductsFacade } from 'src/app/shared/product/products.facade';
 import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'catalog-items',
   templateUrl: './catalog-items.component.html',
-  styleUrls: ['./catalog-items.component.scss']
+  styleUrls: ['./catalog-items.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CatalogItemsComponent implements OnInit {
+export class CatalogItemsComponent {
   @Input() product!: Product;
+
   constructor(
-    private cartService: CartService
+    public facade: ProductsFacade
   ) { }
-
-  ngOnInit(): void {
-  }
-  
-  addToCart(product: Product) {
-
-    this.cartService.addProduct(product);
-  } 
-
 }

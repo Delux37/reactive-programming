@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 // Components
 import { CartComponent } from './cart/cart.component';
@@ -21,10 +22,11 @@ import { CartService } from './cart/services/cart.service';
   imports: [
     CommonModule,
     MatIconModule,
-    MatBadgeModule
+    MatBadgeModule,
+    HttpClientModule
   ],
   providers: [
-    CartService
+    CartService,
   ],
   exports: [
     CartComponent,

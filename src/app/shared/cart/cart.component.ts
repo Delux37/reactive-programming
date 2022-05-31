@@ -1,21 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from './services/cart.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { map } from 'rxjs';
+import { ProductsFacade } from '../product/products.facade';
 
 @Component({
   selector: 'cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  styleUrls: ['./cart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CartComponent implements OnInit {
-  get productTotal() {
-    return this.cartService.totalProducts
-  };
+export class CartComponent {
+   totalItems$ = this.facade.cartsVm$.pipe(map(state => state.totalProductInCart))
 
   constructor(
-    private cartService: CartService
+    private facade: ProductsFacade
   ) { }
-
-  ngOnInit(): void {
-  }
-
 }
