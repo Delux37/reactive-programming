@@ -35,7 +35,7 @@ export class ProductsFacade {
         this.activeProduct$,
         this.products$,
         this.categories$,
-        this.loading$
+        this.loading$,
     ).pipe(
         map(([selectedCategory, activeProduct, products, categories, loading]) => {
             return { selectedCategory, activeProduct, products, categories, loading }
@@ -61,7 +61,6 @@ export class ProductsFacade {
 
         if(selected) {
             this.updateState({..._state, cartItems: _state.cartItems.map(item => {
-                console.log('1')
                 if(item.id === product.id) {
                     return {
                         ...item, amount: ++item.amount

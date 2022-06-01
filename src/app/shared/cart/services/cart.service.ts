@@ -21,7 +21,6 @@ export class CartService {
       this.cartItems.push({...product, amount: 1});
     }
     const val = this.cartItems.reduce((acc,curr) => acc + curr.amount, 0);
-    console.log(val);
     this._totalProducts = val;
   }
 }
