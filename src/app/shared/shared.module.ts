@@ -10,9 +10,6 @@ import { CartItemsComponent } from './cart/cart-items/cart-items.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 
-// Services
-import { CartService } from './cart/services/cart.service';
-
 
 @NgModule({
   declarations: [
@@ -24,9 +21,6 @@ import { CartService } from './cart/services/cart.service';
     MatIconModule,
     MatBadgeModule,
     HttpClientModule
-  ],
-  providers: [
-    CartService,
   ],
   exports: [
     CartComponent,

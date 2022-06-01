@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, combineLatest, debounceTime, distinctUntilChanged, map, Observable, switchMap } from "rxjs";
+import { BehaviorSubject, combineLatest, debounceTime, distinctUntilChanged, map, Observable, switchMap, tap } from "rxjs";
 import { Product } from "src/app/products/models/product.model";
 import { environment } from "src/environments/environment";
 import { ProductState } from "./product-state.model";
@@ -19,15 +19,14 @@ let _state: ProductState = {
 @Injectable({providedIn:'root'})
 export class ProductsFacade {
     private store = new BehaviorSubject<ProductState>(_state);
-    private state$ = this.store.asObservable();
+    private state$ = this.store.asObservable()
 
     selectedCategory$ = this.state$.pipe(map(state => state.selectedCategory), debounceTime(500), distinctUntilChanged());
     categories$ = this.state$.pipe(map(state => state.categories), debounceTime(500), distinctUntilChanged());
     products$ = this.state$.pipe(map(state => state.products), distinctUntilChanged());
     activeProduct$ = this.state$.pipe(map(state => state.activeProduct), distinctUntilChanged());
     cartItems$ = this.state$.pipe(map(state => state.cartItems), distinctUntilChanged());
-    totalProductInCart$ = this.state$.pipe(map(state => state.totalProductInCart), distinctUntilChanged());
-    totalPriceOfCartItems$ = this.state$.pipe(map(state => state.totalPriceOfCartItems), distinctUntilChanged());
+    totalAmount$ = this.state$.pipe(map(state => state.cartItems.reduce((acc, curr) => acc + curr.amount, 0)), distinctUntilChanged())
     loading$ = this.state$.pipe(map(state => state.loading));
 
     productsVm$ = combineLatest(
@@ -44,11 +43,10 @@ export class ProductsFacade {
 
     cartsVm$ = combineLatest(
         this.cartItems$,
-        this.totalProductInCart$,
-        this.totalPriceOfCartItems$,
+        this.totalAmount$
     ).pipe(
-        map(([cartItems, totalProductInCart, totalPriceOfCartItems]) => {
-            return { cartItems, totalProductInCart, totalPriceOfCartItems }
+        map(([cartItems, totalAmount]) => {
+            return { cartItems, totalAmount }
         })
     )
 
@@ -101,20 +99,5 @@ export class ProductsFacade {
             switchMap(category => this.fetchProducts(category))
         )
         .subscribe(products => this.updateState({..._state, products, loading: false}))
-
-        // Observe cartItems 
-        this.cartItems$.pipe(
-            map(items => {
-                const totalPriceOfCartItems = items.reduce((acc, curr) => acc + curr.price * curr.amount, 0)
-                const totalProductInCart = items.reduce((acc, curr) => acc + curr.amount, 0)
-
-                return {
-                    totalPriceOfCartItems,
-                    totalProductInCart
-                }
-            })
-        )
-        .subscribe(({ totalPriceOfCartItems, totalProductInCart }) => 
-        this.updateState({..._state, totalPriceOfCartItems, totalProductInCart}))
     }
 }

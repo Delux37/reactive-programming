@@ -9,7 +9,8 @@ import { ProductsFacade } from '../product/products.facade';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartComponent {
-   totalItems$ = this.facade.cartsVm$.pipe(map(state => state.totalProductInCart))
+   totalItems$ = this.facade.cartsVm$.pipe(map(cart => cart.totalAmount))
+  
 
   constructor(
     private facade: ProductsFacade
